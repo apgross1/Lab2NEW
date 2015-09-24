@@ -32,6 +32,7 @@ public class Hand {
 	private boolean Straight;
 	private boolean Ace;
 	private static Deck dJoker = new Deck();
+	private boolean FiveOfKind;
 
 	public Hand()
 	{
@@ -149,7 +150,10 @@ public class Hand {
 			ScoreHand(eHandStrength.FiveOfAKind,
 					CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank()
 							.getRank(), 0, 0);
+			this.setFiveOfKind(true);
 		}
+		
+		
 
 		// Straight Evaluation
 		else if (Ace) {
@@ -205,8 +209,13 @@ public class Hand {
 							.getRank(), 0, 0);
 		}
 		// Four of a Kind
-
-		//TODO: You need to build the logic to figure out Four of a kind
+		if (this.isFiveOfKind() == false) {
+			if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank() == CardsInHand
+					.get(eCardNo.FourthCard.getCardNo()).getRank()) {
+				//MAY NOT BE RIGHT!
+				ScoreHand(eHandStrength.FourOfAKind, CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank(), 0, 0);
+			}
+		}
 
 		// Full House
 		//TODO: You need to build the logic to figure out Full House
@@ -240,6 +249,13 @@ public class Hand {
 
 
 
+	private boolean isFiveOfKind() {
+		return FiveOfKind;
+	}
+	private void setFiveOfKind(boolean fiveOfKind) {
+		FiveOfKind = fiveOfKind;
+	}
+	
 	private void ScoreHand(eHandStrength hST, int HiHand, int LoHand, int Kicker) {
 		this.HandStrength = hST.getHandStrength();
 		this.HiHand = HiHand;
