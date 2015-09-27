@@ -24,7 +24,7 @@ public class Hand {
 	@XmlElement
 	private int LoHand;
 	@XmlElement
-	private int Kicker;
+	private ArrayList<Card> Kicker;
 
 	private boolean bScored = false;
 
@@ -69,6 +69,7 @@ public class Hand {
 		}
 		this.CardsInHand.add(c);
 	}
+	
 	
 	public Card  GetCardFromHand(int location)
 	{
@@ -115,7 +116,17 @@ public class Hand {
 	}
 
 
-	public int getKicker() {
+	public void setKicker(ArrayList<Card> arrayList) {
+		this.Kicker = arrayList;
+		Collections.sort(this.Kicker, Card.CardRank);
+	}
+	
+	public void addKicker(Card card) {
+		this.Kicker.add(card);
+		Collections.sort(this.Kicker, Card.CardRank);
+	}
+	
+	public ArrayList<Card> getKicker() {
 		return Kicker;
 	}
 
@@ -170,9 +181,11 @@ public class Hand {
 
 		if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank() == CardsInHand
 				.get(eCardNo.FifthCard.getCardNo()).getRank()) {
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
 			ScoreHand(eHandStrength.FiveOfAKind,
 					CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank()
-							.getRank(), 0, 0);
+							.getRank(), 0, this.getKicker());
 			this.setFiveOfKind(true);
 		}
 		else
@@ -224,35 +237,54 @@ public class Hand {
 				&& Flush == true
 				&& CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank() == eRank.TEN
 				&& Ace) {
-			ScoreHand(eHandStrength.RoyalFlush, 0, 0, 0);
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
+			ScoreHand(eHandStrength.RoyalFlush, 0, 0, this.getKicker());
 			this.setRoyalFlush(true);
 			this.setStraightFlush(false);
 		}
 
 		// Straight Flush
 		else if (Straight == true && Flush == true) {
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
 			ScoreHand(eHandStrength.StraightFlush,
 					CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank()
-							.getRank(), 0, 0);
+							.getRank(), 0, this.getKicker());
 			setStraightFlush(true);
 			this.setRoyalFlush(false);
 		}
 		// Four of a Kind
 		if (this.isFiveOfKind() == false) {
-			if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank() == CardsInHand
-					.get(eCardNo.FourthCard.getCardNo()).getRank() || CardsInHand.get(eCardNo.SecondCard.getCardNo()).getRank() == CardsInHand
-							.get(eCardNo.FifthCard.getCardNo()).getRank()) {
+			if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank() == CardsInHand
+					.get(eCardNo.FourthCard.getCardNo()).getRank().getRank() || CardsInHand.get(eCardNo.SecondCard.getCardNo()).getRank().getRank() == CardsInHand
+							.get(eCardNo.FifthCard.getCardNo()).getRank().getRank()) {
 				
-				if (CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank() != CardsInHand
-						.get(eCardNo.FourthCard.getCardNo()).getRank()) {
-					int kicker = CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank().getRank();
-					ScoreHand(eHandStrength.FourOfAKind, 0, 0, kicker);
+				if (CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank().getRank() != CardsInHand
+						.get(eCardNo.FourthCard.getCardNo()).getRank().getRank()) {
+					ArrayList<Card> kicker = new ArrayList<Card>();
+					this.setKicker(kicker);
+					int hiFour = 0;
+					
+					if (CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank().getRank() > CardsInHand
+						.get(eCardNo.FourthCard.getCardNo()).getRank().getRank()){
+						hiFour = CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank().getRank();
+					}
+					
+					ScoreHand(eHandStrength.FourOfAKind, hiFour, 0, this.getKicker());
 					this.setFourofKind(true);
 				}
 				else if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank() != CardsInHand
 						.get(eCardNo.SecondCard.getCardNo()).getRank()) {
-					int kicker = CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank();
-					ScoreHand(eHandStrength.FourOfAKind, 0, 0, kicker);
+					ArrayList<Card> kicker = new ArrayList<Card>();
+					this.setKicker(kicker);
+					int hiFour = 0;
+					if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank() > CardsInHand
+							.get(eCardNo.SecondCard.getCardNo()).getRank().getRank()){
+							hiFour = CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank();
+						}
+					
+					ScoreHand(eHandStrength.FourOfAKind, hiFour, 0, this.getKicker());
 					this.setFourofKind(true);
 				}
 			}
@@ -283,17 +315,27 @@ public class Hand {
 			}
 			
 			if (copyHand.get(eCardNo.FirstCard.getCardNo()).getRank() == copyHand.get(eCardNo.SecondCard.getCardNo()).getRank()) {
-				ScoreHand(eHandStrength.FullHouse, eHandStrength.ThreeOfAKind.getHandStrength(), eHandStrength.Pair.getHandStrength(), 0);
+				ArrayList<Card> kicker = new ArrayList<Card>();
+				this.setKicker(kicker);
+				ScoreHand(eHandStrength.FullHouse, eHandStrength.ThreeOfAKind.getHandStrength(), eHandStrength.Pair.getHandStrength(), this.getKicker());
 		}
 
 		// Flush
 		if (Flush == true & this.isRoyalFlush() == false & this.isStraightFlush() == false) {
-			ScoreHand(eHandStrength.Flush, 0, 0, 0);
+			int hiCardFlush = 0;
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
+			for (int i = 1; i < CardsInHand.size(); i++) {
+				this.addKicker(CardsInHand.get(i));
+			}
+			ScoreHand(eHandStrength.Flush, CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank(), 0, this.getKicker());
 		}
 		
 		// Straight
 		if (Straight == true & this.isStraightFlush() == false) {
-			ScoreHand(eHandStrength.Straight, 0, 0, 0);
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
+			ScoreHand(eHandStrength.Straight, CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank().getRank(), 0, this.getKicker());
 		}
 
 		// Three of a Kind
@@ -301,8 +343,39 @@ public class Hand {
 			if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank() == CardsInHand
 					.get(eCardNo.ThirdCard.getCardNo()).getRank() || CardsInHand.get(eCardNo.SecondCard.getCardNo()).getRank() == CardsInHand
 							.get(eCardNo.FourthCard.getCardNo()).getRank() || CardsInHand.get(eCardNo.ThirdCard.getCardNo()).getRank() == CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank()) {
-				//FILL IN PARAMETERS HERE!
-				ScoreHand(eHandStrength.ThreeOfAKind,0,0,0);
+				int hiCardThreeKind = 0;
+				for (int i = 0; i < CardsInHand.size(); i++) {
+					if (CardsInHand.get(i).getRank().getRank() > hiCardThreeKind) {
+						hiCardThreeKind = CardsInHand.get(i).getRank().getRank();
+					}
+					else
+						continue;
+				}
+				
+				if (CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank() == CardsInHand.get(eCardNo.ThirdCard.getCardNo()).getRank()) {
+					ArrayList<Card> kicker = new ArrayList<Card>();
+					this.setKicker(kicker);
+					for (int i = 3; i < CardsInHand.size(); i++ ) {
+						this.addKicker(CardsInHand.get(i));
+					}
+					
+				}
+				
+				else if (CardsInHand.get(eCardNo.SecondCard.getCardNo()).getRank() == CardsInHand.get(eCardNo.FourthCard.getCardNo()).getRank()) {
+					ArrayList<Card> kicker = new ArrayList<Card>();
+					this.setKicker(kicker);
+					this.addKicker(CardsInHand.get(0));
+					this.addKicker(CardsInHand.get(4));
+				}
+				
+				else if (CardsInHand.get(eCardNo.ThirdCard.getCardNo()).getRank() == CardsInHand.get(eCardNo.FifthCard.getCardNo()).getRank()) {
+					ArrayList<Card> kicker = new ArrayList<Card>();
+					this.setKicker(kicker);
+					this.addKicker(CardsInHand.get(0));
+					this.addKicker(CardsInHand.get(1));
+					
+				}
+				ScoreHand(eHandStrength.ThreeOfAKind,hiCardThreeKind,0, this.getKicker());
 			}
 			else
 				this.setThreeofKind(false);
@@ -345,17 +418,18 @@ public class Hand {
 					highcard = pairHand.get(2).getRank().getRank();
 					lowcard = pairHand.get(0).getRank().getRank();
 				}
-				int kicker = 0;
+				ArrayList<Card> kicker = new ArrayList<Card>();
+				this.setKicker(kicker);
 				for (int i = 0; i < CardsInHand.size(); i ++) {
 					for (int j = 0; j < pairHand.size(); j ++) {
 						if (CardsInHand.get(i).getRank().getRank() == pairHand.get(j).getRank().getRank()) {
 							continue;
 						}
 						else
-							kicker = CardsInHand.get(i).getRank().getRank();
+							this.addKicker(CardsInHand.get(i));
 					}
 				}
-				ScoreHand(eHandStrength.TwoPair, highcard, lowcard, kicker);
+				ScoreHand(eHandStrength.TwoPair, highcard, lowcard, this.getKicker());
 			}
 		
 
@@ -384,17 +458,26 @@ public class Hand {
 				copyPair.add(CardsInHand.get(eCardNo.FifthCard.getCardNo()));
 			}
 			
-			int kicker = 0;
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
 			for (int i = 0; i < CardsInHand.size(); i ++) {
 				for (int j = 0; j < copyPair.size(); j ++) {
 					if (CardsInHand.get(i).getRank().getRank() == copyPair.get(j).getRank().getRank()) {
 						continue;
 					}
 					else
-						kicker += CardsInHand.get(i).getRank().getRank();
+						this.addKicker(CardsInHand.get(i));
 				}
 			}
-			ScoreHand(eHandStrength.TwoPair, 0, 0, kicker);
+			int hiCardPair = 0;
+			for (int i = 0; i < CardsInHand.size(); i++) {
+				if (CardsInHand.get(i).getRank().getRank() > hiCardPair) {
+					hiCardPair = CardsInHand.get(i).getRank().getRank();
+				}
+				else
+					continue;
+			}
+			ScoreHand(eHandStrength.Pair, hiCardPair, 0, this.getKicker());
 			
 		}
 		
@@ -403,11 +486,15 @@ public class Hand {
 		// High Card
 		//	I'll give you this one :)
 		else {
+			ArrayList<Card> kicker = new ArrayList<Card>();
+			this.setKicker(kicker);
+			for (int i = 1; i < CardsInHand.size(); i++ ) {
+				this.addKicker(CardsInHand.get(i));
+			}
 			ScoreHand(eHandStrength.HighCard,
 					CardsInHand.get(eCardNo.FirstCard.getCardNo()).getRank()
 							.getRank(), 0,
-					CardsInHand.get(eCardNo.SecondCard.getCardNo()).getRank()
-							.getRank());
+					this.getKicker());
 			}	
 		}
 	}
@@ -419,7 +506,7 @@ public class Hand {
 		FiveOfKind = fiveOfKind;
 	}
 	
-	private void ScoreHand(eHandStrength hST, int HiHand, int LoHand, int Kicker) {
+	private void ScoreHand(eHandStrength hST, int HiHand, int LoHand, ArrayList<Card> Kicker) {
 		this.HandStrength = hST.getHandStrength();
 		this.HiHand = HiHand;
 		this.LoHand = LoHand;
@@ -467,12 +554,19 @@ public class Hand {
 				return result;
 			}
 
-			result = h2.getKicker() - h1.getKicker();
-			if (result != 0) {
-				return result;
+			
+			
+			for (int i = 0; i < h1.getKicker().size(); i++) {
+				for (int j = 0; j < h2.getKicker().size(); j ++) {
+					if (h1.getKicker().get(i).getRank().getRank() > h2.getKicker().get(j).getRank().getRank() || h2.getKicker().get(j).getRank().getRank() > h1.getKicker().get(i).getRank().getRank()) {
+						return (h1.getKicker().get(i).getRank().getRank() - h2.getKicker().get(j).getRank().getRank());
+					}
+					
+					else if (h1.getKicker().get(i).getRank().getRank() == h2.getKicker().get(j).getRank().getRank())
+						continue;
+				}
 			}
-
-			return 0;
+			return result;
 		}
 	};
 }

@@ -8,7 +8,7 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-public class Deck_Test {
+public class EvalTest {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
@@ -27,11 +27,8 @@ public class Deck_Test {
 	}
 
 	@Test
-	public void TestFullDeck() {
-		Deck deck = new Deck();
-		assertTrue("Test fails", 52 == deck.getTotalCards());
-		assertTrue("Test fails", deck.drawFromDeck() instanceof Card);
-		
+	public void test() {
+		fail("Not yet implemented");
 	}
 
 }
