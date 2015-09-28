@@ -10,6 +10,10 @@ public enum eCardNo {
 
 	private int CardNo;
 	
+	/**
+	 * Getter that returns value of card index
+	 * @return
+	 */
 	public int getCardNo(){
 		return CardNo;
 	}

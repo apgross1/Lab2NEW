@@ -19,6 +19,10 @@ public enum eGame {
 		this.gameNbr = gameNbr;
 	}
 	
+	/**
+	 * Getter that returns value which indicates the game being played
+	 * @return
+	 */
 	public int getGame(){
 		return gameNbr;
 	}

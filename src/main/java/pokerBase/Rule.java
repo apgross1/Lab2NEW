@@ -14,6 +14,10 @@ public class Rule {
 	private int CommunityCards;
 	private ArrayList<Card> RuleCards = new ArrayList<Card>();
 
+	/**
+	 * An all-encompassing constructor that sets initial values based on the game played
+	 * @param gme
+	 */
 	public Rule(eGame gme) {
 		switch (gme) {
 		case FiveStud: {
@@ -87,6 +91,7 @@ public class Rule {
 		}
 	}
 
+	/**Setters and getters for the above values*/
 	public int GetMaxNumberOfPlayers() {
 		return this.MaxNumberOfPlayers;
 	}

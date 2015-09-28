@@ -60,16 +60,27 @@ public final class Card {
 		return this.Suit;
 	}
 	
+	/**
+	 * Getter for the wild card
+	 * @return
+	 */
 	public boolean getWild()
 	{
 		return this.Wild;
 	}
 	
+	/**
+	 * Setter for wild card
+	 */
 	public void setWild()
 	{
 		this.Wild = true;
 	}
 	
+	/**
+	 * Returns image associated with card
+	 * @return
+	 */
 	public String getCardImg()
 	{
 		return this.CardImg;
@@ -77,6 +88,7 @@ public final class Card {
 
 	/**
 	 * CardRank Comparator is used for sorting the collection by rank
+	 * @return order cards by descending order
 	 */
 	public static Comparator<Card> CardRank = new Comparator<Card>() {
 

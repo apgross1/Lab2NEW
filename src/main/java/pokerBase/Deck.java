@@ -18,6 +18,9 @@ public class Deck {
 	@XmlElement (name="Remaining Card")
 	private ArrayList<Card> cards;
 
+	/**
+	 * Constructor for deck. Creates ArrayList of Cards
+	 */
 	public Deck() {
 
 		//	Create an ArrayList of Cards, add each card
@@ -36,6 +39,10 @@ public class Deck {
 
 	}
 	
+	/**
+	 * Overloaded constructor
+	 * @param NbrOfJokers
+	 */
 	public Deck(int NbrOfJokers) {
 
 		this();
@@ -46,6 +53,11 @@ public class Deck {
 		ShuffleCards();
 	}
 	
+	/**
+	 * Overloaded constructor that takes in number of jokers used as well as an ArrayList of wildcards
+	 * @param NbrOfJokers
+	 * @param WildCards
+	 */
 	public Deck(int NbrOfJokers, ArrayList<Card> WildCards) {
 
 		this(NbrOfJokers);
@@ -65,12 +77,19 @@ public class Deck {
 		ShuffleCards();
 	}
 	
+	/**
+	 * Shuffles cards in deck
+	 */
 	private void ShuffleCards()
 	{
 		//	Shuffle the cards
 		Collections.shuffle(cards);
 	}
 
+	/**
+	 * Draws first card in deck and removes from deck
+	 * @return
+	 */
 	public Card drawFromDeck() {
 		// Removes the first card from the deck and return the card
 		Card FirstCard = cards.get(0);
@@ -78,16 +97,28 @@ public class Deck {
 		return FirstCard;
 	}
 
+	/**
+	 * Returns total number of cards still in the deck
+	 * @return
+	 */
 	public int getTotalCards() {
 		// Returns the total number of cards still in the deck
 		return cards.size();
 	}
 	
+	/**
+	 * Getter for cards in deck
+	 * @return ArrayList of Card instances
+	 */
 	public ArrayList<Card> getCards()
 	{
 		return this.cards;
 	}
 	
+	/**
+	 * Serialies the deck (makes it unique)
+	 * @return
+	 */
 	public StringWriter SerializeMe()
 	{
 	    StringWriter sw = new StringWriter();

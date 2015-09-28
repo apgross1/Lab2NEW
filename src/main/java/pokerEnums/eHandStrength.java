@@ -76,6 +76,10 @@ public enum eHandStrength {
 
 	private int iHandStrength;
 	
+	/**
+	 * Getter that returns value of the hand strength of the respective hand
+	 * @return
+	 */
 	public int getHandStrength(){
 		return iHandStrength;
 	}

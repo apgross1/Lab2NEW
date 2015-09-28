@@ -11,6 +11,10 @@ public enum eSuit {
 
 	private int suit;
 	
+	/**
+	 * Getter that returns numeric value of a suit
+	 * @return
+	 */
 	public int getSuit(){
 		return suit;
 	}

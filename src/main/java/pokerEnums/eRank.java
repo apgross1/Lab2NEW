@@ -23,6 +23,10 @@ public enum eRank {
 
 	private int rank;
 	
+	/**
+	 * Getter that returns rank of individual card
+	 * @return
+	 */
 	public int getRank(){
 		return rank;
 	}

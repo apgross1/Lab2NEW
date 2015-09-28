@@ -26,11 +26,20 @@ public class Deck_Test {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * Tests if the deck is shuffled and instantiated with 52 instance of Card
+	 */
 	@Test
 	public void TestFullDeck() {
 		Deck deck = new Deck();
+		//Does the deck have 52 elements?
 		assertTrue("Test fails", 52 == deck.getTotalCards());
+		
+		//Are the elements in Deck instances of Card?
 		assertTrue("Test fails", deck.drawFromDeck() instanceof Card);
+		
+		//Is the deck shuffled?
+		assertFalse("Deck is in order", deck.drawFromDeck().getRank().getRank() == (deck.drawFromDeck().getRank().getRank() + 1));
 		
 	}
 

@@ -33,8 +33,12 @@ public class EvalTest extends Hand {
 	public void tearDown() throws Exception {
 	}
 
+	/**
+	 * Tests evalTest for a straight and straight flush and compares the two
+	 */
 	@Test
 	public void straightTest() {
+		//Straight
 		Card card1 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card2 = new Card(eSuit.DIAMONDS, eRank.THREE, false);
 		Card card3 = new Card(eSuit.CLUBS, eRank.FOUR, false);
@@ -48,6 +52,7 @@ public class EvalTest extends Hand {
 		hand1.AddCardToHand(card4);
 		hand1.AddCardToHand(card5);
 		
+		//Straight Flush
 		Card card6 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card7 = new Card(eSuit.HEARTS, eRank.THREE, false);
 		Card card8 = new Card(eSuit.HEARTS, eRank.FOUR, false);
@@ -71,8 +76,12 @@ public class EvalTest extends Hand {
 		assertTrue(Hand.HandRank.compare(hand1, hand2) > 0);
 	}
 	
+	/**
+	 * Tests evalTest for a flush and royal flush and compares the two
+	 */
 	@Test
 	public void flushTest() {
+		//Flush
 		Card card1 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card2 = new Card(eSuit.HEARTS, eRank.EIGHT, false);
 		Card card3 = new Card(eSuit.HEARTS, eRank.FOUR, false);
@@ -85,7 +94,7 @@ public class EvalTest extends Hand {
 		hand1.AddCardToHand(card3);
 		hand1.AddCardToHand(card4);
 		hand1.AddCardToHand(card5);
-		
+		//Royal Flush
 		Card card6 = new Card(eSuit.HEARTS, eRank.TEN, false);
 		Card card7 = new Card(eSuit.HEARTS, eRank.JACK, false);
 		Card card8 = new Card(eSuit.HEARTS, eRank.QUEEN, false);
@@ -109,8 +118,12 @@ public class EvalTest extends Hand {
 		assertTrue(Hand.HandRank.compare(hand1, hand2) > 0);
 	}
 	
+	/**
+	 * Tests evalTest for two Three-of-a-Kinds and compares the two
+	 */
 	@Test
 	public void kindTest() {
+		//Three-of-a-kind with 5 as high card
 		Card card1 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card2 = new Card(eSuit.DIAMONDS, eRank.TWO, false);
 		Card card3 = new Card(eSuit.SPADES, eRank.TWO, false);
@@ -124,6 +137,7 @@ public class EvalTest extends Hand {
 		hand1.AddCardToHand(card4);
 		hand1.AddCardToHand(card5);
 		
+		//Three-of-a-Kind with King as high card
 		Card card6 = new Card(eSuit.SPADES, eRank.TWO, false);
 		Card card7 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card8 = new Card(eSuit.DIAMONDS, eRank.TWO, false);
@@ -146,8 +160,12 @@ public class EvalTest extends Hand {
 		assertTrue(Hand.HandRank.compare(hand1, hand2) > 0);
 	}
 	
+	/**
+	 * Tests evalTest for a full house and high card and compares the two
+	 */
 	@Test
 	public void fullHouseTest() {
+		//Full House
 		Card card1 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card2 = new Card(eSuit.DIAMONDS, eRank.TWO, false);
 		Card card3 = new Card(eSuit.SPADES, eRank.TWO, false);
@@ -161,6 +179,7 @@ public class EvalTest extends Hand {
 		hand1.AddCardToHand(card4);
 		hand1.AddCardToHand(card5);
 		
+		//High Card
 		Card card6 = new Card(eSuit.SPADES, eRank.JACK, false);
 		Card card7 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card8 = new Card(eSuit.DIAMONDS, eRank.FIVE, false);
@@ -175,8 +194,6 @@ public class EvalTest extends Hand {
 
 		hand1.EvalHand();
 		hand2.EvalHand();
-		System.out.println(hand1.getHandStrength());
-		System.out.println(hand2.getHandStrength());
 		//Assertion test for evalHand
 		assertTrue(hand1.getHandStrength() == eHandStrength.FullHouse.getHandStrength());
 		assertTrue(hand2.getHandStrength() == eHandStrength.HighCard.getHandStrength());
@@ -185,9 +202,12 @@ public class EvalTest extends Hand {
 		assertTrue(Hand.HandRank.compare(hand1, hand2) < 0);
 	}
 	
+	/**
+	 *Tests evalTest for a pair and two-pair and compares the two 
+	 */
 	@Test
 	public void pairTest() {
-		
+		//Pair
 		Card card1 = new Card(eSuit.HEARTS, eRank.TWO, false);
 		Card card2 = new Card(eSuit.DIAMONDS, eRank.TWO, false);
 		Card card3 = new Card(eSuit.SPADES, eRank.FIVE, false);
@@ -202,6 +222,7 @@ public class EvalTest extends Hand {
 		hand1.AddCardToHand(card4);
 		hand1.AddCardToHand(card5);
 		
+		//Two-Pair
 		Card card6 = new Card(eSuit.SPADES, eRank.JACK, false);
 		Card card7 = new Card(eSuit.HEARTS, eRank.JACK, false);
 		Card card8 = new Card(eSuit.DIAMONDS, eRank.FIVE, false);
@@ -216,8 +237,6 @@ public class EvalTest extends Hand {
 
 		hand1.EvalHand();
 		hand2.EvalHand();
-		System.out.println(hand2.getHandStrength());
-		System.out.println(hand1.getHandStrength());
 		
 		
 		//Assertion test for evalHand

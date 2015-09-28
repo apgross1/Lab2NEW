@@ -42,16 +42,28 @@ public class GamePlay {
 		return MaxNbrOfPlayers;
 	}
 	
+	/**
+	 * Getter for number of Cards in deck
+	 * @return
+	 */
 	public int GetNumberOfCards()
 	{
 		return NbrOfCards;
 	}
 	
+	/**
+	 * Getter for number of jokers in deck
+	 * @return
+	 */
 	public int GetNumberOfJokers()
 	{
 		return NbrOfJokers;
 	}
 	
+	/**
+	 * Getter for number of wild cards in deck
+	 * @return
+	 */
 	public ArrayList<Card> GetWildCards()
 	{
 		return this.WildCards;
